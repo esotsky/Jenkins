@@ -1,0 +1,83 @@
+#!/bin/bash
+#Author- Eric Sotsky
+#Date-October 26
+#Description- Installation of Jenkins on Centos7
+
+#Part 1
+
+#Step 1- Install Java
+
+echo "Jenkins is a Java App. We will first install Java on our system"
+sleep 3
+
+sudo yum install java-11-openjdk-devel -y
+
+#Step 2- Enable the Jenkins Repository
+
+echo "We are going to add Jenkins Repositories"
+sleep 3
+
+curl --silent --location http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo | sudo tee /etc/yum.repos.d/jenkins.repo
+sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+#Step 3- Install the latest stable version of Jenkins
+
+echo "we will now install the latest stable version of Jenkins
+sleep 3
+
+sudo yum install jenkins -y
+sudo systemctl start jenkins
+
+echo "Check the status"
+sleep 2
+
+sudo systemctl status jenkins
+
+echo "Enable the Jenkins service to start on boot"
+sudo systemctl enable jenkins
+
+#Step 4- Adjust the firewall
+
+echo "We need to open the necessary ports for Jenkins"
+
+sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp
+sudo firewall-cmd --reload
+
+sleep 5
+
+#Part 2
+
+#Step 1
+echo "We will now setup Jenkins in our server"
+sleep 5
+
+echo "Launch Google Chrome- Microsoft Edge sucks. Google for life!"
+
+echo "Enter http://your_ip_or_domain:8080"
+
+#Step 2- Copy and paste the administrator password"
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+echo "copy the password and paste it in"
+
+sleep 5
+#Step 3 Install the suggested plugins
+
+echo "click Install suggested plugins"
+
+sleep 5
+
+#Step 4- Create first admin user
+
+echo "You will get a form to create the First Admin User. Fill out the form, and then click save and continue"
+
+sleep 5
+
+#Step 5- Instance Configuration
+
+echo "On the next page you will need to set the URL for the Jenkins instance. The Jenkins URL field will come with a default  value (automatically generated). Just click on Save and Finish"       
+
+sleep 5
+
+echo "Jenkins is now ready for use!"
